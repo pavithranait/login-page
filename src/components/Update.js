@@ -4,11 +4,14 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { updateuser } from "../slice/apiSlice";
+import Header from "./Header";
 
 const Update = () => {
   const [name, setData] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [phone, setPhone] = useState("");
+  const [address, setAddress] = useState("");
   const [f, setF] = useState("");
   const [id, setId] = useState("");
   const navigate = useNavigate();
@@ -22,7 +25,7 @@ const Update = () => {
 
       axios.get(`http://127.0.0.1:3000/get-users/${id}`).then((response) => {
         setF(response);
-        console.log(response.data.data[0].email);
+        console.log(response);
         //   if (response.data.data[0].id === id) {
         //     console.log("idr",response.data.data[0].id)
         //     axios
@@ -41,6 +44,14 @@ const Update = () => {
     },
     [id]
   );
+  const handleAddress = (e) => {
+    setAddress(e.target.value);
+    // setSubmitted(false);
+  };
+  const handlePhone = (e) => {
+    setPhone(e.target.value);
+    // setSubmitted(false);
+  };
 
   const getInput = (e) => {
     setId(e.target.value);
@@ -57,8 +68,11 @@ const Update = () => {
       updateuser({
         id: id,
         name: name,
-        email:email,
-        password:password
+        email: email,
+        password: password,
+        phone: phone,
+        address: address
+
       })
     );
     // Handle response
@@ -66,14 +80,15 @@ const Update = () => {
   };
 
   return (
-    <>
+    <div>
+      <Header />
       <div className="login-form">
         {/* {datas} */}
         <div>
           <h1>Update User</h1>
         </div>
         {/* {datas && datas.map(user => <h1>{user}</h1>)} */}
-        <form>
+        <form className="form-b">
           {/* Labels and inputs for form data */}
           <div>
             <label className="input-container">ID</label>
@@ -103,6 +118,21 @@ const Update = () => {
               onChange={(e) => setPassword(e.target.value)}
               type="name"
             />
+            <label className="input-container">Address</label>
+          <input
+            onChange={handleAddress}
+            className="input"
+            value={address}
+            type="text"
+          />
+           <label className="input-container">Phone-No</label>
+          <input
+            onChange={handlePhone}
+            className="input"
+            value={phone}
+            type="text"
+          />
+            
 
             <button className="btn" type="submit" onClick={updateUser}>
               Submit
@@ -110,7 +140,7 @@ const Update = () => {
           </div>
         </form>
       </div>
-    </>
+    </div>
   );
 };
 

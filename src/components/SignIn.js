@@ -116,7 +116,7 @@ function SignIn() {
     // console.log(data)
   }, []);
   const fetchApi = () => {
-    axios.post("http://127.0.0.1:3000/get-users")
+    axios.get("http://127.0.0.1:3000/get-users")
     .then((response) => {
       console.log(response.data);
       setData(response.data.data)
@@ -144,7 +144,6 @@ function SignIn() {
       }
     }
     )
-    
     setEmail("");
     setPassword("")
     // Handle validations
@@ -153,10 +152,11 @@ function SignIn() {
 
  
   return (
-    <div>
+    <div >
       <div>
         <Header />
       </div>
+      <div className="login-form">
       <form
         action="/dashboard"
         id="login"
@@ -165,7 +165,7 @@ function SignIn() {
         className="login-form"
       >
         <h1>Login</h1>
-        <label className="input-container">Name</label>
+        <label className="input-container">Email</label>
         <input
           type="email"
           name="email"
@@ -183,6 +183,9 @@ function SignIn() {
         />
         <input type="submit" value="Login" className="btn" />
       </form>
+
+      </div>
+      
     </div>
   );
 }

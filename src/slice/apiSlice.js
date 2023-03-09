@@ -3,14 +3,14 @@ import axios from "axios";
 
 export const apiSlice = createSlice({
   name: "api",
-  initialState: { value: { id: "" , name:"", email:"", password:"",} },
+  initialState: { value: { id: "" , name:"", email:"", password:"", gender: "", phone:"", image:"", address:""} },
   reducers: {
     login: (state, action) => {
         try{
             state.value = action.payload;
             const data = {
-                email:state.value.email,
-                password : state.value.password 
+                email: state.value.email,
+                password: state.value.password 
             }
             axios
         .post("http://127.0.0.1:3000/login", data)
@@ -29,16 +29,22 @@ export const apiSlice = createSlice({
       try {
         state.value = action.payload;
         const data = {
-            email:state.value.email,
-            password : state.value.password 
+            name: state.value.name,
+            email: state.value.email,
+            password : state.value.password,
+            gender: state.value.gender,
+            phone: state.value.phone,
+            image: state.value.image,
+            address:state.value.address
         }
         axios
             .post("http://127.0.0.1:3000/register",  data )
           .then((response) => {
-            console.log(response.status);
+            console.log(response);
             if (response.status === 201) {
-                console.log(window)
-                
+                // console.log(window)
+                alert("user registered successfully!!Login into th user")
+                window.location.href = '/signin'
               //   setSubmitted(true);
               //   navigate("/signin");
             }
@@ -48,6 +54,7 @@ export const apiSlice = createSlice({
             if (error.response) {
               // Request made and server responded
               alert(error.response.data.msg);
+              window.location.href = '/signup'
               //   setSubmitted(false);
               //   navigate("/signup")
 
@@ -66,7 +73,7 @@ export const apiSlice = createSlice({
         axios
           .delete(`http://127.0.0.1:3000/get-users/${data}`)
           .then((response) => {
-            // console.log(response)
+            console.log(response)
             alert("user deleted successfull");
             window.location.reload();
 
@@ -83,6 +90,9 @@ export const apiSlice = createSlice({
             id: state.value.id,
             name: state.value.name,
             email: state.value.email,
+            password: state.value.password,
+            phone: state.value.phone,
+            address: state.value.address
           }
           console.log("con",data.name, data.id)
           axios
