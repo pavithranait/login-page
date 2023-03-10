@@ -1,24 +1,80 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+
+const initialState =  { id: "" , name:"", email:"", password:"", gender: "", phone:"", image:"", address:"", data:[], isLoading: false }
+
+export const fetchU = createAsyncThunk("fetchU", async() => {
+  // const response = await fetch("http://127.0.0.1:3000/get-users");
+  // console.log(response.json())
+  // return response.json()
+
+  return await axios
+      .get("http://127.0.0.1:3000/get-users")
+      .then(response => {
+        console.log(response)}
+        
+      )
+})
 
 export const apiSlice = createSlice({
   name: "api",
-  initialState: { value: { id: "" , name:"", email:"", password:"", gender: "", phone:"", image:"", address:""} },
+  initialState,
   reducers: {
+    extraReducers:(builder) => {
+      try{
+        // console.log("action",state, "dd",action)
+        builder.addCase(fetchU.pending, (state, action) => {
+          state.isLoading =  true
+        })
+        builder.addCase(fetchU.fulfilled, (state, action) => {
+          state.isLoading =  false
+          state.data = action.payload
+        })
+        builder.addCase(fetchU.rejected, (state, action) => {
+          state.isLoading =  false
+        })
+      // //   axios
+      // // .get("http://127.0.0.1:3000/get-users")
+      // // .then(response => {
+      // //   console.log("ss", response)
+      // //   response.data.data.map((user => console.log(user)));
+      // //   state.data = action.payload;
+      // //   state.data = response
+      // //   return response
+        
+      //   // console.log(state.data)
+      //   // console.log(response.data)
+      
+      //   // Handle response
+      // })
+
+      }catch(err){
+        console.log(err)
+
+      }
+    }, 
     login: (state, action) => {
         try{
-            state.value = action.payload;
+            state = action.payload;
             const data = {
-                email: state.value.email,
-                password: state.value.password 
+                email: state.email,
+                password: state.password 
             }
             axios
         .post("http://127.0.0.1:3000/login", data)
         .then((response) => {
           console.log(response);
+          alert("login success")
           console.log(response.data.token);
           localStorage.setItem("key", response.data.token);
-          window.location.href = '/display'
+          const token = localStorage.getItem("key");
+                    if(token){
+                        window.location.href ='/display'
+                        // console.log(res.data._token)
+                    }else{
+                        return false
+                    }
+          // window.location.href = '/display'
           // Handle response
         });
         }catch(err) {
@@ -27,15 +83,15 @@ export const apiSlice = createSlice({
     },
     register: (state, action) => {
       try {
-        state.value = action.payload;
+        state = action.payload;
         const data = {
-            name: state.value.name,
-            email: state.value.email,
-            password : state.value.password,
-            gender: state.value.gender,
-            phone: state.value.phone,
-            image: state.value.image,
-            address:state.value.address
+            name: state.name,
+            email: state.email,
+            password : state.password,
+            gender: state.gender,
+            phone: state.phone,
+            image: state.image,
+            address:state.address
         }
         axios
             .post("http://127.0.0.1:3000/register",  data )
@@ -68,8 +124,8 @@ export const apiSlice = createSlice({
     },
     deleteuser: (state, action) => {
       try {
-        state.value = action.payload;
-        const data = state.value.id;
+        state = action.payload;
+        const data = state.id;
         axios
           .delete(`http://127.0.0.1:3000/get-users/${data}`)
           .then((response) => {
@@ -85,14 +141,14 @@ export const apiSlice = createSlice({
     },
     updateuser: (state, action) => {
         try {
-          state.value = action.payload;
+          state = action.payload;
           const data = {
-            id: state.value.id,
-            name: state.value.name,
-            email: state.value.email,
-            password: state.value.password,
-            phone: state.value.phone,
-            address: state.value.address
+            id: state.id,
+            name: state.name,
+            email: state.email,
+            password: state.password,
+            phone: state.phone,
+            address: state.address
           }
           console.log("con",data.name, data.id)
           axios
@@ -112,5 +168,5 @@ export const apiSlice = createSlice({
   },
 });
 
-export const { deleteuser, login, register, updateuser } = apiSlice.actions;
+export const { deleteuser, login, register, updateuser, fetchuser } = apiSlice.actions;
 export default apiSlice.reducer;

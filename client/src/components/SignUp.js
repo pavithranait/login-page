@@ -72,20 +72,11 @@ const handleInputChange = (e) => {
 
 }
   // Handling the form submission
-  const handleSubmit = async(e) => {
+  const handleSubmit = (e) => {
     console.log(file)
     e.preventDefault();
     const fData = new FormData();
     fData.append('image', file);
-    try {
-      const res = await axios.post(
-        "http://127.0.0.1:3000/profile-upload-single",
-        fData
-      );
-      console.log(res, fData);
-    } catch (ex) {
-      console.log(ex);
-    }
     if (name === "" || email === "" || password === "") {
       setError(true);
     } else {

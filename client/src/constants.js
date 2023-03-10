@@ -1,0 +1,1 @@
+export const API = "GET http://localhost/phpmyadmin/index.php?route=/sql&pos=0&db=mydb3&table=users1";
