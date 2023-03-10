@@ -3,15 +3,13 @@ import axios from "axios";
 import Header from "./Header";
 import { useNavigate } from "react-router-dom";
 import Update from "./Update";
-import { connect } from "react-redux";
 import { useDispatch } from "react-redux";
 import { deleteuser } from "../slice/apiSlice";
-import { retrieveAPI } from "../store/actions/createActions";
 // import { fetchuse } from "../slice/apiSlice";
 // import { fetchU } from "../slice/apiSlice";
 import { fetchuser } from "../slice/apiSlice";
 import { useSelector } from "react-redux";
-// import { getFetch } from "../slice/fetchSlice";
+import { getFetch } from "../slice/fetchSlice";
 
 
 const DisplayUser = () => {
@@ -21,9 +19,7 @@ const user = useSelector(state => state);
 console.log("ddd", user)
 
   useEffect(() => {
-    dispatch(fetchuser({
-      data:datas
-    }))
+    dispatch(getFetch())
   //   handleUpdate()
   }, [])
 
@@ -95,7 +91,7 @@ console.log("ddd", user)
                 <td>{user.address}</td>
                 <td>{user.Gender}</td>
                 <td>{user.token}</td>
-                {/* <td>{<img src={require(`../image/${user.images1}`)} alt="profile" width='50' />}</td> */}
+                <td>{<img src={require(`../image/${user.images1}`)} alt="profile" width='50' />}</td>
                 <td>{user.token_S}</td>
                 <td><button className="btn-1" value = {user.id} onClick={updateHandle}>Update</button></td>  
                 <td><button className="btn" value = {user.id} onClick={deleteHandle}>Delete</button></td>
@@ -110,4 +106,4 @@ console.log("ddd", user)
     // 
 }
 
-export default connect(null, {retrieveAPI})(DisplayUser)
+export default DisplayUser

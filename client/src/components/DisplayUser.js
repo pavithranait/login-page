@@ -14,7 +14,7 @@ const dispatch = useDispatch()
 
   useEffect(() => {
     handleUpdate()
-  // console.log(datas);
+  console.log(datas);
   }, [datas])
 
     const handleUpdate = () => {
@@ -64,6 +64,7 @@ const dispatch = useDispatch()
       }
       return (
         <div>
+          {/* {JSON.stringify(user)} */}
           <div>
             <Header />
           </div>
@@ -91,7 +92,8 @@ const dispatch = useDispatch()
                   <td>{user.address}</td>
                   <td>{user.Gender}</td>
                   <td>{user.token}</td>
-                  <td>{<img src={require(`../image/${user.images1}`)} alt="profile" width='50' />}</td>
+                  {/* <td>{user.images1}</td> */}
+                  <td>{<img src={require(`../image/Cover3.jpg`)} alt="profile" width='50' />}</td>
                   <td>{user.token_S}</td>
                   <td><button className="btn-1" value = {user.id} onClick={updateHandle}>Update</button></td>  
                   <td><button className="btn" value = {user.id} onClick={deleteHandle}>Delete</button></td>

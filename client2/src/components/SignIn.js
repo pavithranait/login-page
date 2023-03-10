@@ -95,7 +95,7 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-// import FileUpload from "./FileUpload";
+import FileUpload from "./FileUpload";
 import Header from "./Header";
 import { useDispatch } from "react-redux";
 import { login } from "../slice/apiSlice";

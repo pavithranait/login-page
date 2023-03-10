@@ -1,7 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { retrieveAPI } from "../store/actions/createActions";
 import { ActionTypes } from "../constants";
-import { FETCH_API } from "../store/actions/types";
 import axios from "axios";
 
 const initialState =  { id: "" , name:"", email:"", password:"", gender: "", phone:"", image:"", address:"", data:[], isLoading: false }
@@ -23,20 +21,10 @@ export const apiSlice = createSlice({
   name: "api",
   initialState,
   reducers: {
-    fetchuser:(state, action) => {
+    fetchuser:(state = state.data, action) => {
 
-      // console.log(action)
+      try{
 
-        // state.data = action.payload;
-
-        // switch (action.type) {
-
-        //   case FETCH_API:
-        //     return action.payload;
-      
-        //   default:
-        //     return state;
-        // }
         // console.log("action",state, "dd",action)
         // builder.addCase(fetchU.pending, (state, action) => {
         //   state.isLoading =  true
@@ -48,25 +36,30 @@ export const apiSlice = createSlice({
         // builder.addCase(fetchU.rejected, (state, action) => {
         //   state.isLoading =  false
         // })
-      //   state = action.payload;
-      //       const data = {
-      //         data: state.data 
-      //       }
+        state = action.payload;
+            const data = {
+              data: state.data 
+            }
         axios
       .get("http://127.0.0.1:3000/get-users")
       .then(response => {
         console.log("ss", response)
         // state.data.push(response)
         response.data.data.map((user => user));
-        // return response
+        // state.data = action.payload;
+        // state.data = response
+        // // return response
         
-        // console.log(state.data)
-        // console.log(response.data)
+      //   // console.log(state.data)
+      //   // console.log(response.data)
       
-        // Handle response
+      //   // Handle response
       })
 
+      }catch(err){
+        // console.log(err)
 
+      }
     }, 
     login: (state, action) => {
         try{
