@@ -16,14 +16,12 @@ import { useSelector } from "react-redux";
 
 const DisplayUser = () => {
 const [datas, setData] = useState("");
+const user = useSelector(state => state.user);
 const dispatch = useDispatch()
-const user = useSelector(state => state);
 console.log("ddd", user)
 
   useEffect(() => {
-    dispatch(fetchuser({
-      data:retrieveAPI
-    }))
+    dispatch(retrieveAPI())
   //   handleUpdate()
   }, [])
 

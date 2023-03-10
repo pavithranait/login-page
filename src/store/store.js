@@ -1,11 +1,16 @@
-import { configureStore } from "@reduxjs/toolkit"
-import apiSlice from "../slice/apiSlice"
+import { createStore, applyMiddleware } from 'redux';
+import { composeWithDevTools } from "redux-devtools-extension";
+import thunk from 'redux-thunk';
+import { fetchuser } from '../slice/apiSlice';
 
-export const store = configureStore({
-    reducer: {
-        api:apiSlice,
+const initialState = {};
 
-    },
-})
+const middleware = [thunk];
 
-export default store
+const store = createStore(
+    fetchuser,
+  initialState,
+  composeWithDevTools(applyMiddleware(...middleware))
+);
+
+export default store;

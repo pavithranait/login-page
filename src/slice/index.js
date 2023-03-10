@@ -1,5 +1,5 @@
 import { combineReducers } from "redux";
-import tutorials from "./fetchSlice"
+import { fetch } from "./apiSlice";
 export default combineReducers({
-    tutorials,
+    fetch,
   });

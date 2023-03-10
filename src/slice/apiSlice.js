@@ -18,21 +18,27 @@ const initialState =  { id: "" , name:"", email:"", password:"", gender: "", pho
         
 //       )
 // })
-
+console.log("api",FETCH_API)
 export const apiSlice = createSlice({
   name: "api",
   initialState,
   reducers: {
-    fetchuser:(state, action) => {
+    fetchuser:(state, {type, payload}) => {
+
+      console.log(type)
+      console.log(payload)
 
       // console.log(action)
+        // const sD = state.data.push( action.payload.data.data)
+        // console.log("dd",sD)
 
-        state.data = action.payload;
+        // console.log("dis", action);
 
-        switch (action.type) {
+        switch (type) {
 
           case FETCH_API:
-            return action.payload;
+            console.log("dfd",payload)
+            return payload;
       
           default:
             return state;
