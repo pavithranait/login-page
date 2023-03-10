@@ -22,7 +22,7 @@ console.log("ddd", user)
 
   useEffect(() => {
     dispatch(fetchuser({
-      data:datas
+      data:retrieveAPI
     }))
   //   handleUpdate()
   }, [])

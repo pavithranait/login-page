@@ -27,16 +27,16 @@ export const apiSlice = createSlice({
 
       // console.log(action)
 
-        // state.data = action.payload;
+        state.data = action.payload;
 
-        // switch (action.type) {
+        switch (action.type) {
 
-        //   case FETCH_API:
-        //     return action.payload;
+          case FETCH_API:
+            return action.payload;
       
-        //   default:
-        //     return state;
-        // }
+          default:
+            return state;
+        }
         // console.log("action",state, "dd",action)
         // builder.addCase(fetchU.pending, (state, action) => {
         //   state.isLoading =  true
@@ -52,19 +52,19 @@ export const apiSlice = createSlice({
       //       const data = {
       //         data: state.data 
       //       }
-        axios
-      .get("http://127.0.0.1:3000/get-users")
-      .then(response => {
-        console.log("ss", response)
-        // state.data.push(response)
-        response.data.data.map((user => user));
-        // return response
+      //   axios
+      // .get("http://127.0.0.1:3000/get-users")
+      // .then(response => {
+      //   console.log("ss", response)
+      //   // state.data.push(response)
+      //   response.data.data.map((user => user));
+      //   // return response
         
-        // console.log(state.data)
-        // console.log(response.data)
+      //   // console.log(state.data)
+      //   // console.log(response.data)
       
-        // Handle response
-      })
+      //   // Handle response
+      // })
 
 
     }, 

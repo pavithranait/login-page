@@ -1,12 +1,11 @@
-import baseURL from "../constants";
+import httpCommon from "../http-common";
 
 const getAll = () => {
-  console.log(baseURL)
-  return baseURL.get("/get-users");
+  console.log(httpCommon)
+  return httpCommon.get("/get-users");
 };
 
 const APIService = {
- 
   getAll,
 };
 
