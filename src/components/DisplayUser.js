@@ -5,28 +5,30 @@ import { useNavigate } from "react-router-dom";
 import Update from "./Update";
 import { useDispatch } from "react-redux";
 import { deleteuser } from "../slice/apiSlice";
+import { fetchuser } from "../slice/apiSlice";
+import { useSelector } from "react-redux";
 
 
 const DisplayUser = () => {
 const [datas, setData] = useState("");
 const dispatch = useDispatch()
+const data = useSelector(state => state);
+console.log("ddd", data)
 // const [senD, setSendData] = useState("");
 
   useEffect(() => {
     handleUpdate()
-  // console.log(datas);
-  }, [datas])
+  console.log(datas);
+  }, [])
 
     const handleUpdate = () => {
-        axios
-      .get("http://127.0.0.1:3000/get-users")
-      .then(response => {
-        // console.log(response)
-        // console.log(response.data)
-        setData(response.data.data);
+      dispatch(fetchuser({
+        data : datas,
+      }
+      ))
+      setData(data)
       
-        // Handle response
-      })
+      console.log(data)
     }
     const navigate = useNavigate();
     const updateHandle = (e) => {
@@ -72,6 +74,13 @@ const dispatch = useDispatch()
                 <th>id</th>
                 <th>name</th>
                 <th>email</th>
+                <th>password</th>
+                <th>phone</th>
+                <th>address</th>
+                <th>gender</th>
+                <th>token</th>
+                <th>image</th>
+                <th>status</th>
                 <th>Edit</th>
                 <th>Delete</th>
             </tr>
@@ -79,6 +88,13 @@ const dispatch = useDispatch()
                 <td>{user.id}</td>
                 <td>{user.name}</td>
                 <td>{user.email}</td>
+                <td>{user.password}</td>
+                <td>{user.Phone}</td>
+                <td>{user.address}</td>
+                <td>{user.Gender}</td>
+                <td>{user.token}</td>
+                <td>{<img src={require(`../image/${user.images1}`)} alt="profile" width='50' />}</td>
+                <td>{user.token_S}</td>
                 <td><button className="btn-1" value = {user.id} onClick={updateHandle}>Update</button></td>  
                 <td><button className="btn" value = {user.id} onClick={deleteHandle}>Delete</button></td>
                 </tr>)}
