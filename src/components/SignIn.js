@@ -97,6 +97,7 @@ import { useNavigate } from "react-router-dom";
 import Header from "./Header";
 import { useDispatch } from "react-redux";
 import { login } from "../slice/apiSlice";
+import DisplayUser from "./DisplayUser";
 
 function SignIn() {
   const navigate = useNavigate();
@@ -150,7 +151,6 @@ function SignIn() {
         action="/dashboard"
         id="login"
         method="post"
-        onSubmit={handleSubmit}
         className="login-form"
       >
         <h1>Login</h1>
@@ -170,9 +170,9 @@ function SignIn() {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <input type="submit" value="Login" className="btn" />
+        <button type="submit" value="Login" className="btn" onClick={handleSubmit}>Sumbit</button>
       </form>
-
+      
       </div>
       
     </div>

@@ -12,19 +12,19 @@ const DisplayUser = () => {
   console.log("get", datas.api);
   const user = useSelector((state) => state);
   const dispatch = useDispatch();
-  const users = user;
-  // console.log("ddd", users);
+  console.log("ddd", user);
 
-  const handleUpdate = useCallback(() => {
-    dispatch(getFetch());
-    setData(users); 
+  const handleUpdate = () => {
+ 
+    setData(user); 
   
-  }, [users, dispatch]);
+  };
 
   useEffect(() => {
-    
+    dispatch(getFetch());
     handleUpdate()
-  }, [handleUpdate]);
+   
+  }, [handleUpdate, datas, user]);
   const navigate = useNavigate();
 
   const updateHandle = (e) => {
@@ -81,7 +81,7 @@ const DisplayUser = () => {
         </tr>
         {datas.api &&
           datas.api[0].map((user, i) => (
-            <tr>
+            <tr key={i}>
               <td>{user.id}</td>
               <td>{user.name}</td>
               <td>{user.email}</td>
