@@ -4,7 +4,7 @@ import { ActionTypes } from "../constants";
 import { FETCH_API } from "../store/actions/types";
 import axios from "axios";
 
-const initialState =  { id: "" , name:"", email:"", password:"", gender: "", phone:"", image:"", address:"", data:[], isLoading: false }
+const initialState =  { id: "" , name:"", email:"", password:"", gender: "", phone:"", image:"", address:"", data:"", isLoading: false }
 
 export const getFetch = createAsyncThunk("getFetch/get-users", async() =>{
   const res = await APIService.getAll();
@@ -18,12 +18,14 @@ export const apiSlice = createSlice({
   initialState,
   
   reducers: {
-    fetchuser:(state = initialState, action) => {
+    fetchuser:(state, action) => {
 
       try{
         console.log(action)
       state = action.payload;
-      const data = state.image;
+      const data = {
+
+        image : state.image};
 
         axios.post(
           "http://127.0.0.1:3000/profile-upload-single",data
@@ -132,7 +134,7 @@ export const apiSlice = createSlice({
             if (response.status === 201) {
                 // console.log(window)
                 alert("user registered successfully!!Login into th user")
-                // window.location.href = '/signin'
+                window.location.href = '/signin'
               //   setSubmitted(true);
               //   navigate("/signin");
             }
@@ -163,8 +165,7 @@ export const apiSlice = createSlice({
           .then((response) => {
             console.log(response)
             alert("user deleted successfull");
-            window.location.reload();
-
+            // window.location.reload();
             // Handle response
           });
       } catch (err) {
@@ -205,8 +206,8 @@ export const apiSlice = createSlice({
     },
     [getFetch.fulfilled]:(state, {payload}) =>{
         state.isLoading = true
-        // console.log("slice", payload)
-        return [payload]
+        console.log("slice", payload)
+        return payload
 
     },
     [getFetch.rejected]:(state, {payload}) =>{

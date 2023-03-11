@@ -23,6 +23,7 @@ const DisplayUser = () => {
   }, [dispatch, user]);
   useEffect(() => {
     handleUpdate();
+    
   }, [handleUpdate]);
   const navigate = useNavigate();
 
@@ -79,7 +80,8 @@ const DisplayUser = () => {
           <th>Delete</th>
         </tr>
         {datas &&
-          datas.api[0].data.map((user) => (
+          datas.api[0].data.map((user, i) => (
+       
             <tr>
               <td>{user.id}</td>
               <td>{user.name}</td>
