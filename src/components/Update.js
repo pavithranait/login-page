@@ -23,24 +23,24 @@ const Update = () => {
       // console.log("id",id);
       // console.log("datas",datas);
 
-      axios.get(`http://127.0.0.1:3000/get-users/${id}`).then((response) => {
-        setF(response);
-        console.log(response);
-        //   if (response.data.data[0].id === id) {
-        //     console.log("idr",response.data.data[0].id)
-        //     axios
-        //       .put(`http://127.0.0.1:3000/get-userss/${id}}`, datas)
-        //       .then((res) => {
-        //         console.log(res.data);
-        //         // navigate("/");
-        //       })
-        //       .catch((err) => {
-        //         console.log(err);
-        //       });
-        //   }
+      // axios.get(`http://127.0.0.1:3000/get-users/${id}`).then((response) => {
+      //   setF(response);
+      //   console.log(response);
+      //   //   if (response.data.data[0].id === id) {
+      //   //     console.log("idr",response.data.data[0].id)
+      //   //     axios
+      //   //       .put(`http://127.0.0.1:3000/get-userss/${id}}`, datas)
+      //   //       .then((res) => {
+      //   //         console.log(res.data);
+      //   //         // navigate("/");
+      //   //       })
+      //   //       .catch((err) => {
+      //   //         console.log(err);
+      //   //       });
+      //   //   }
 
-        //   // Handle response
-      });
+      //   //   // Handle response
+      // });
     },
     [id]
   );

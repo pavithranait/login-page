@@ -4,11 +4,11 @@ import { ActionTypes } from "../constants";
 import { FETCH_API } from "../store/actions/types";
 import axios from "axios";
 
-const initialState =  { id: "" , name:"", email:"", password:"", gender: "", phone:"", image:"", address:"", data:"", isLoading: false }
+const initialState =  { id: "" , name:"", email:"", password:"", gender: "", phone:"", image:"", address:"", data:[], isLoading: false }
 
 export const getFetch = createAsyncThunk("getFetch/get-users", async() =>{
   const res = await APIService.getAll();
-  console.log(res)
+  // console.log(res)
   return res.data;
  
 })
@@ -25,7 +25,8 @@ export const apiSlice = createSlice({
       state = action.payload;
       const data = {
 
-        image : state.image};
+        image : state.image
+      };
 
         axios.post(
           "http://127.0.0.1:3000/profile-upload-single",data
@@ -33,7 +34,7 @@ export const apiSlice = createSlice({
         );
 
       }catch (err) {
-        console.log(err.message);
+        // console.log(err.message);
       }
 
 
@@ -97,9 +98,9 @@ export const apiSlice = createSlice({
             axios
         .post("http://127.0.0.1:3000/login", data)
         .then((response) => {
-          console.log(response);
+          // console.log(response);
           alert("login success")
-          console.log(response.data.token);
+          // console.log(response.data.token);
           localStorage.setItem("key", response.data.token);
           const token = localStorage.getItem("key");
                     if(token){
@@ -159,12 +160,14 @@ export const apiSlice = createSlice({
     deleteuser: (state, action) => {
       try {
         state = action.payload;
-        const data = state.id;
+        const data = {
+          id: state.id};
         axios
           .delete(`http://127.0.0.1:3000/get-users/${data}`)
           .then((response) => {
-            console.log(response)
+            // console.log(response)
             alert("user deleted successfull");
+            window.location.href = '/display'
             // window.location.reload();
             // Handle response
           });
@@ -183,16 +186,22 @@ export const apiSlice = createSlice({
             phone: state.phone,
             address: state.address
           }
-          console.log("con",data.name, data.id)
-          axios
+          // console.log("con",data.name, data.id)
+          axios.get(`http://127.0.0.1:3000/get-users/${data.id}`)
+          if(data.id){
+            axios
           .put(`http://127.0.0.1:3000/get-userss/${data.id}}`, data)
           .then((res) => {
             console.log(res.data);
             // navigate("/");
+            window.location.href = '/display'
           })
           .catch((err) => {
             console.log(err);
           });
+
+          }
+          
     //   }
         } catch (err) {
           console.log(err.message);
@@ -200,21 +209,12 @@ export const apiSlice = createSlice({
       },
   },
   extraReducers: {
-    [getFetch.pending]:(state, {payload}) =>{
-        state.isLoading = true
 
-    },
     [getFetch.fulfilled]:(state, {payload}) =>{
-        state.isLoading = true
-        console.log("slice", payload)
-        return payload
+        // console.log("slice", payload)
+        return [payload]
 
     },
-    [getFetch.rejected]:(state, {payload}) =>{
-        state.isLoading = false
-        state.message=payload
-
-    }
 }
  
 });
