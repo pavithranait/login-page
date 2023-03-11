@@ -4,9 +4,8 @@ import { ActionTypes } from "../constants";
 import { FETCH_API } from "../store/actions/types";
 import axios from "axios";
 
-const initialState =  { id: "" , name:"", email:"", password:"", gender: "", phone:"", image:"", address:"", data:[], isLoading: false }
 
-export const getFetch = createAsyncThunk("getFetch/get-users", async() =>{
+export const getFetch = createAsyncThunk("get-users/getFetch", async() =>{
   const res = await APIService.getAll();
   // console.log(res)
   return res.data;
@@ -15,9 +14,28 @@ export const getFetch = createAsyncThunk("getFetch/get-users", async() =>{
 // console.log("api",FETCH_API)
 export const apiSlice = createSlice({
   name: "api",
-  initialState,
+  initialState :  { id: "" , name:"", email:"", password:"", gender: "", phone:"", image:"", address:"", data:[], isLoading: false },
   
   reducers: {
+
+    fethApi: (state, action) => {
+
+     try{
+      // state = action.payload;
+      const data = state.data
+
+      axios.post(
+        "http://127.0.0.1:3000/get-users",data
+    
+      );
+      state.data.push(data)
+
+     }catch(err){
+      console.log(err)
+
+     }
+
+    },
     fetchuser:(state, action) => {
 
       try{
@@ -160,14 +178,15 @@ export const apiSlice = createSlice({
     deleteuser: (state, action) => {
       try {
         state = action.payload;
-        const data = {
-          id: state.id};
+        const data =  state.id
+          
+        
         axios
           .delete(`http://127.0.0.1:3000/get-users/${data}`)
           .then((response) => {
-            // console.log(response)
+            console.log(response)
             alert("user deleted successfull");
-            window.location.href = '/display'
+            // window.location.href = '/display'
             // window.location.reload();
             // Handle response
           });
@@ -188,6 +207,7 @@ export const apiSlice = createSlice({
           }
           // console.log("con",data.name, data.id)
           axios.get(`http://127.0.0.1:3000/get-users/${data.id}`)
+          console.log(data.id)
           if(data.id){
             axios
           .put(`http://127.0.0.1:3000/get-userss/${data.id}}`, data)
@@ -211,8 +231,8 @@ export const apiSlice = createSlice({
   extraReducers: {
 
     [getFetch.fulfilled]:(state, {payload}) =>{
-        // console.log("slice", payload)
-        return [payload]
+        // console.log("slice", payload.data)
+        return [payload.data]
 
     },
 }
@@ -231,5 +251,5 @@ export const apiSlice = createSlice({
 // }
 
 
-export const { deleteuser, login, register, updateuser, fetchuser } = apiSlice.actions;
+export const { deleteuser, login, register, updateuser, fetchuser, fethApi } = apiSlice.actions;
 export default apiSlice.reducer;

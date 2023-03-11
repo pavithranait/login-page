@@ -1,30 +1,28 @@
 import React, { useState, useEffect, useCallback } from "react";
-import axios from "axios";
 import Header from "./Header";
 import { useNavigate } from "react-router-dom";
 // import Update from "./Update";
-import { connect } from "react-redux";
 import { useDispatch } from "react-redux";
 import { deleteuser } from "../slice/apiSlice";
-import { retrieveAPI } from "../store/actions/createActions";
 import { useSelector } from "react-redux";
 import { getFetch } from "../slice/apiSlice";
 
 const DisplayUser = () => {
   const [datas, setData] = useState("");
-  // console.log("get", datas);
+  console.log("get", datas.api);
   const user = useSelector((state) => state);
   const dispatch = useDispatch();
-  const users = user
-  // console.log("ddd", user);
+  const users = user;
+  // console.log("ddd", users);
 
   const handleUpdate = useCallback(() => {
-    setData(users);
+    dispatch(getFetch());
+    setData(users); 
   
-  }, [user]);
+  }, [users, dispatch]);
 
   useEffect(() => {
-    dispatch(getFetch());
+    
     handleUpdate()
   }, [handleUpdate]);
   const navigate = useNavigate();
@@ -81,8 +79,8 @@ const DisplayUser = () => {
           <th>Edit</th>
           <th>Delete</th>
         </tr>
-        {datas &&
-          datas.api[0].data.map((user, i) => (
+        {datas.api &&
+          datas.api[0].map((user, i) => (
             <tr>
               <td>{user.id}</td>
               <td>{user.name}</td>
@@ -125,4 +123,4 @@ const DisplayUser = () => {
   //
 };
 
-export default connect(null, { retrieveAPI })(DisplayUser);
+export default DisplayUser

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import Header from "./Header";
 import { register } from "../slice/apiSlice";
 import { useDispatch } from "react-redux";
@@ -74,7 +73,7 @@ const handleInputChange = (e) => {
 }
   // Handling the form submission
   const handleSubmit = (e) => {
-    // console.log(file)
+    console.log(file)
     e.preventDefault();
     const fData = new FormData();
     fData.append('image', file);
@@ -84,7 +83,7 @@ const handleInputChange = (e) => {
       }))
       // console.log("img", fData);
     } catch (ex) {
-      console.log(ex);
+      // console.log(ex);
     }
     if (name === "" || email === "" || password === "") {
       setError(true);

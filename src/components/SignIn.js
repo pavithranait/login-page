@@ -92,10 +92,8 @@
 // };
 
 // export default SignIn;
-import axios from "axios";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import FileUpload from "./FileUpload";
 import Header from "./Header";
 import { useDispatch } from "react-redux";
 import { login } from "../slice/apiSlice";
@@ -103,7 +101,6 @@ import { login } from "../slice/apiSlice";
 function SignIn() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
-  const [datas, setData] = useState("");
   const [password, setPassword] = useState("");
   const controller = new AbortController();
   const { signal } = controller;
