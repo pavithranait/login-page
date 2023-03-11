@@ -4,6 +4,7 @@ import axios from "axios";
 import Header from "./Header";
 import { register } from "../slice/apiSlice";
 import { useDispatch } from "react-redux";
+import { fetchuser } from "../slice/apiSlice";
 
 const SignUp = () => {
   // States for registration
@@ -72,17 +73,16 @@ const handleInputChange = (e) => {
 
 }
   // Handling the form submission
-  const handleSubmit = async(e) => {
-    console.log(file)
+  const handleSubmit = (e) => {
+    // console.log(file)
     e.preventDefault();
     const fData = new FormData();
     fData.append('image', file);
     try {
-      const res = await axios.post(
-        "http://127.0.0.1:3000/profile-upload-single",
-        fData
-      );
-      console.log(res, fData);
+      dispatch(fetchuser({
+        data:fData
+      }))
+      // console.log("img", fData);
     } catch (ex) {
       console.log(ex);
     }
@@ -103,7 +103,7 @@ const handleInputChange = (e) => {
       // .then(res => { // then print response status
       //     console.warn(res);
       // })
-      navigate("/signin")
+      // navigate("/signin")
       setError(false);
     }
   };

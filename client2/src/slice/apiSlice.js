@@ -1,5 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { retrieveAPI } from "../store/actions/createActions";
 import { ActionTypes } from "../constants";
+import { FETCH_API } from "../store/actions/types";
 import axios from "axios";
 
 const initialState =  { id: "" , name:"", email:"", password:"", gender: "", phone:"", image:"", address:"", data:[], isLoading: false }
@@ -16,15 +18,31 @@ const initialState =  { id: "" , name:"", email:"", password:"", gender: "", pho
         
 //       )
 // })
-
+console.log("api",FETCH_API)
 export const apiSlice = createSlice({
   name: "api",
   initialState,
   reducers: {
-    fetchuser:(state = state.data, action) => {
+    fetchuser:(state, {type, payload}) => {
 
-      try{
+      console.log(type)
+      console.log(payload)
 
+      // console.log(action)
+        // const sD = state.data.push( action.payload.data.data)
+        // console.log("dd",sD)
+
+        // console.log("dis", action);
+
+        switch (type) {
+
+          case FETCH_API:
+            console.log("dfd",payload)
+            return payload;
+      
+          default:
+            return state;
+        }
         // console.log("action",state, "dd",action)
         // builder.addCase(fetchU.pending, (state, action) => {
         //   state.isLoading =  true
@@ -36,30 +54,25 @@ export const apiSlice = createSlice({
         // builder.addCase(fetchU.rejected, (state, action) => {
         //   state.isLoading =  false
         // })
-        state = action.payload;
-            const data = {
-              data: state.data 
-            }
-        axios
-      .get("http://127.0.0.1:3000/get-users")
-      .then(response => {
-        console.log("ss", response)
-        // state.data.push(response)
-        response.data.data.map((user => user));
-        // state.data = action.payload;
-        // state.data = response
-        // // return response
+      //   state = action.payload;
+      //       const data = {
+      //         data: state.data 
+      //       }
+      //   axios
+      // .get("http://127.0.0.1:3000/get-users")
+      // .then(response => {
+      //   console.log("ss", response)
+      //   // state.data.push(response)
+      //   response.data.data.map((user => user));
+      //   // return response
         
       //   // console.log(state.data)
       //   // console.log(response.data)
       
       //   // Handle response
-      })
+      // })
 
-      }catch(err){
-        // console.log(err)
 
-      }
     }, 
     login: (state, action) => {
         try{

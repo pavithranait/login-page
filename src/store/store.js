@@ -1,16 +1,14 @@
-import { createStore, applyMiddleware } from 'redux';
-import { composeWithDevTools } from "redux-devtools-extension";
-import thunk from 'redux-thunk';
-import { fetchuser } from '../slice/apiSlice';
+import { configureStore } from '@reduxjs/toolkit'
+import apiSlice from '../slice/apiSlice';
+// import { getFetch } from '../slice/fetchSlice';
 
-const initialState = {};
 
-const middleware = [thunk];
-
-const store = createStore(
-    fetchuser,
-  initialState,
-  composeWithDevTools(applyMiddleware(...middleware))
-);
-
+let reducer = {
+  // fetchApi: getFetch,
+  api: apiSlice
+}
+const store = configureStore({
+  reducer: reducer,
+  devTools: true,
+})
 export default store;

@@ -1,12 +1,13 @@
 import APIService from "../../services/apiService";
-import { Dispatch } from "react";
+import { Dispatch } from "redux";
 import { FETCH_API } from "./types";
-export const retrieveAPI = () => async (Dispatch) => {
+
+export const retrieveAPI = () =>  (dispatch) => {
     try {
-      const res = await APIService.getAll();
+      const res =  APIService.getAll();
       console.log("action",res)
   
-      Dispatch({
+      dispatch({
         type: FETCH_API,
         payload: res.data
       });

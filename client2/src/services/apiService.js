@@ -1,8 +1,8 @@
-import http from "../http-common";
+import httpCommon from "../http-common";
 
 const getAll = () => {
   // console.log(httpCommon)
-  return http.get("/get-users");
+  return httpCommon.get("/get-users");
 };
 
 const APIService = {

@@ -1,48 +1,59 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { retrieveAPI } from "../store/actions/createActions";
+import APIService from "../services/apiService";
 import { ActionTypes } from "../constants";
 import { FETCH_API } from "../store/actions/types";
 import axios from "axios";
 
 const initialState =  { id: "" , name:"", email:"", password:"", gender: "", phone:"", image:"", address:"", data:[], isLoading: false }
 
-// export const fetchU = createAsyncThunk("fetchU", async() => {
-//   // const response = await fetch("http://127.0.0.1:3000/get-users");
-//   // console.log(response.json())
-//   // return response.json()
-  
-//   return await axios
-//       .get("http://127.0.0.1:3000/get-users")
-//       .then(response => {
-//         console.log(response)}
-        
-//       )
-// })
-console.log("api",FETCH_API)
+export const getFetch = createAsyncThunk("getFetch/get-users", async() =>{
+  const res = await APIService.getAll();
+  console.log(res)
+  return res.data;
+ 
+})
+// console.log("api",FETCH_API)
 export const apiSlice = createSlice({
   name: "api",
   initialState,
+  
   reducers: {
-    fetchuser:(state, {type, payload}) => {
+    fetchuser:(state = initialState, action) => {
 
-      console.log(type)
-      console.log(payload)
+      try{
+        console.log(action)
+      state = action.payload;
+      const data = state.image;
 
-      // console.log(action)
-        // const sD = state.data.push( action.payload.data.data)
-        // console.log("dd",sD)
-
-        // console.log("dis", action);
-
-        switch (type) {
-
-          case FETCH_API:
-            console.log("dfd",payload)
-            return payload;
+        axios.post(
+          "http://127.0.0.1:3000/profile-upload-single",data
       
-          default:
-            return state;
-        }
+        );
+
+      }catch (err) {
+        console.log(err.message);
+      }
+
+
+      // console.log(type)
+      // console.log(payload)
+
+      // // console.log(action)
+      //   // const sD = state.data.push( action.payload.data.data)
+      //   // console.log("dd",sD)
+
+      //   // console.log("dis", action);
+
+      //   switch (type) {
+
+      //     case FETCH_API: {
+      //       console.log("dfd",payload)
+      //       return payload;
+        
+      //     }
+      //     default:
+      //       return fetch;
+      //   }
         // console.log("action",state, "dd",action)
         // builder.addCase(fetchU.pending, (state, action) => {
         //   state.isLoading =  true
@@ -121,7 +132,7 @@ export const apiSlice = createSlice({
             if (response.status === 201) {
                 // console.log(window)
                 alert("user registered successfully!!Login into th user")
-                window.location.href = '/signin'
+                // window.location.href = '/signin'
               //   setSubmitted(true);
               //   navigate("/signin");
             }
@@ -187,7 +198,27 @@ export const apiSlice = createSlice({
         }
       },
   },
+  extraReducers: {
+    [getFetch.pending]:(state, {payload}) =>{
+        state.isLoading = true
+
+    },
+    [getFetch.fulfilled]:(state, {payload}) =>{
+        state.isLoading = true
+        // console.log("slice", payload)
+        return [payload]
+
+    },
+    [getFetch.rejected]:(state, {payload}) =>{
+        state.isLoading = false
+        state.message=payload
+
+    }
+}
+ 
 });
+
+
 // export const fetchuse = (state = initialState, type, payload ) => {
 //   console.log(payload)
 //   switch (type) {
@@ -197,6 +228,7 @@ export const apiSlice = createSlice({
 //       return state;
 //   }
 // }
+
 
 export const { deleteuser, login, register, updateuser, fetchuser } = apiSlice.actions;
 export default apiSlice.reducer;
