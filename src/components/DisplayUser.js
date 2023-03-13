@@ -9,22 +9,25 @@ import { getFetch } from "../slice/apiSlice";
 
 const DisplayUser = () => {
   const [datas, setData] = useState("");
-  console.log("get", datas.api);
+  // console.log("get", datas.api);
   const user = useSelector((state) => state);
   const dispatch = useDispatch();
-  console.log("ddd", user);
+  // console.log("ddd", user);
 
-  const handleUpdate = () => {
+  const handleUpdate = useCallback(() => {
  
     setData(user); 
   
-  };
+  }, [user]);
 
   useEffect(() => {
-    dispatch(getFetch());
+
+    setTimeout(() => {
+      dispatch(getFetch());
+    }, 2000)
     handleUpdate()
    
-  }, [handleUpdate, datas, user]);
+  }, [dispatch, handleUpdate]);
   const navigate = useNavigate();
 
   const updateHandle = (e) => {
@@ -81,7 +84,7 @@ const DisplayUser = () => {
         </tr>
         {datas.api &&
           datas.api[0].map((user, i) => (
-            <tr key={i}>
+            <tr>
               <td>{user.id}</td>
               <td>{user.name}</td>
               <td>{user.email}</td>

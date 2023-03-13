@@ -229,7 +229,7 @@ export const apiSlice = createSlice({
   extraReducers: {
 
     [getFetch.fulfilled]:(state, {payload}) =>{
-        // console.log("slice", payload.data)
+        console.log("slice", payload.data)
         return [payload.data]
 
     },
